@@ -7,7 +7,6 @@ package br.com.fatecpg.ads.poo.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ernandes
  */
-@WebServlet(name = "Greeting", urlPatterns = {"/greeting.html"})
-public class Greeting extends HttpServlet {
+@WebServlet(name = "RandomServlet", urlPatterns = {"/random.html"})
+public class RandomServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,22 +37,28 @@ public class Greeting extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title> Greeting Java EE </title>");            
+            out.println("<title>Servlet RandomServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h4><a href='index.html'> Voltar</a></h4>");
-            out.println("<h1> JavaEE Greeting</h1>");
-            int h = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+            out.println("<h4><a href='index.html'> Voltar </a></h4>");
+            out.println("<h1>Java EE</h1>");
             
-            if (h < 6){
-               out.println("<h2> Vá Dormir!</h2>"); 
-            }else if (h < 12){
-                out.println("<h2> Bom dia!</h2>");
+            try{
+                double n = Double.parseDouble(request.getParameter("n"));
+                 out.println("<table border = '1'>");
+               
+                for (int i = 1; i <= n; i ++){
+                    
+                    out.println("<tr>");
+                    int random = (int)(1000 * Math.random());
+                    out.println("<th>" + i + "</th>");
+                    out.println("<th>" + random + "</th>");
+                    out.println("</tr>");
+                }
+                out.println("</table>");
                 
-            } else if (h < 18){
-                out.println("<h2> Boa tarde!</h2>");
-            } else {
-                out.println("<h2>Boa noite!</h2>");
+            }catch(Exception ex){
+                out.println("<h3 style ='color:red'> Parametro inválido </h3>");
             }
             out.println("</body>");
             out.println("</html>");
